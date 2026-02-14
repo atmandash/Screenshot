@@ -1,0 +1,473 @@
+/* ══════════════════════════════════════════════════════════
+   RealityGap — Truth Verification Engine (Constellation Design)
+   ══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* ── Theme Colors (Deep Space) ── */
+    --bg-deep: #050511;
+    --bg-nebula: #0B0B1E;
+
+    --accent-cyan: #00F0FF;
+    --accent-blue: #2D5BFF;
+    --accent-purple: #7000FF;
+
+    --success: #00FF94;
+    --danger: #FF2E2E;
+
+    --text-main: #FFFFFF;
+    --text-muted: #8888AA;
+
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(20, 20, 35, 0.4);
+
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* ── Layout ── */
+    --nav-height: 80px;
+    --max-width: 1400px;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* Subtle starfield background handled by canvas primarily, but fallback gradient here */
+    background: radial-gradient(circle at top center, #1a1a3a 0%, #050511 60%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+/* ── Navbar ── */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--nav-height);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: rgba(5, 5, 17, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.03em;
+}
+
+.brand-icon {
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+}
+
+.nav-menu {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: var(--accent-cyan);
+}
+
+.btn-primary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+}
+
+/* ── Hero ── */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    overflow: hidden;
+}
+
+/* Canvas takes full hero background but we position it to the right visually */
+#constellation-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    /* Mask to blend left side into content */
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 1) 40%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 1) 40%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* Typography */
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: 300;
+    /* Light weight for elegance */
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.hero-text h1 strong {
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 480px;
+}
+
+/* Sleek Input */
+.search-input-wrapper {
+    position: relative;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    display: flex;
+    padding: 4px;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.search-input-wrapper:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.search-trigger {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 16px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    text-align: left;
+    cursor: text;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-trigger svg {
+    color: var(--text-muted);
+}
+
+.btn-search-action {
+    background: var(--accent-blue);
+    color: #fff;
+    border: none;
+    padding: 0 32px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(45, 91, 255, 0.4);
+    transition: all 0.2s;
+}
+
+.btn-search-action:hover {
+    background: #406aff;
+    box-shadow: 0 0 25px rgba(45, 91, 255, 0.6);
+}
+
+/* Right Side - Visual Container used for Widget Positioning */
+.hero-visual-area {
+    position: relative;
+    height: 600px;
+    width: 600px;
+    /* Centered in the right column */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    margin-top: -100px;
+    /* Shift up to clear footer */
+}
+
+/* Floating Glass Widgets */
+.glass-widget {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.3s;
+    /* Smooth visual changes only */
+    pointer-events: auto;
+
+    /* Default state for non-revolving widgets (like in results) */
+    position: relative;
+}
+
+/* Revolving Widgets (Absolute in Hero) */
+.gw-revolving {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Start centered, JS will translate3d */
+    transform: translate(-50%, -50%);
+    will-change: transform, opacity, z-index;
+    min-width: 200px;
+}
+
+.glass-widget:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(40, 40, 60, 0.6);
+    z-index: 1000 !important;
+    /* Pop to front on hover */
+}
+
+/* Specific Widgets */
+.gw-result {
+    top: 20%;
+    right: 10%;
+    width: 260px;
+    border-left: 3px solid var(--success);
+    animation-delay: 0s;
+}
+
+.gw-score {
+    bottom: 15%;
+    right: 30%;
+    width: 200px;
+    border-left: 3px solid var(--accent-purple);
+    animation-delay: 2s;
+    text-align: center;
+}
+
+.gw-alert {
+    top: 40%;
+    left: 0;
+    width: 220px;
+    border-left: 3px solid var(--danger);
+    animation-delay: 4s;
+    transform: translateX(-50%);
+    /* Start slightly left */
+}
+
+/* Widget Content Styles */
+.gw-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.gw-value-lg {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gw-icon-check {
+    color: var(--success);
+    filter: drop-shadow(0 0 8px var(--success));
+}
+
+.gw-gauge {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.gw-gauge-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    width: 92%;
+    box-shadow: 0 0 10px var(--accent-purple);
+}
+
+@keyframes floatWidget {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Feature Footer */
+.footer-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(5, 5, 17, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 24px 0;
+}
+
+.footer-items {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+}
+
+.f-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.f-item svg {
+    color: var(--accent-cyan);
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+
+    .hud-line-v,
+    .hud-header-center {
+        display: none;
+    }
+
+    .hero-content {
+        /* ... existing ... */
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 40px;
+    }
+
+    .hero-visual-area {
+        display: none;
+        /* Hide complex widgets on mobile */
+    }
+
+    .search-input-wrapper {
+        margin: 0 auto;
+    }
+}
+
+/* ── Analyzing / Results States ── */
+.hidden {
+    display: none !important;
+}
+
+/* Keeping similar structure for state views but updating styles */
+.analyzing-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-deep);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.results-view {
+    padding-top: 100px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-left: 40px;
+    padding-right: 40px;
+    position: relative;
+    z-index: 20;
+    /* Ensure above canvas */
+    padding-bottom: 100px;
+}
+
+.results-view .glass-widget {
+    position: relative;
+    transform: none !important;
+    /* Disable float animation */
+    animation: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}

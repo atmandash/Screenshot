@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealityGap — Truth Verification Engine</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                    </path>
+                    <path d="M2 12h20"></path>
+                </svg>
+                <span>RealityGap</span>
+            </div>
+
+            <div class="nav-menu">
+                <a href="#" class="nav-item active">Platform</a>
+                <a href="#" class="nav-item">API</a>
+                <a href="#" class="nav-item">Pricing</a>
+                <a href="#" class="nav-item">Documentation</a>
+            </div>
+
+            <div style="display: flex; gap: 16px;">
+                <a href="#" class="nav-item" style="align-self:center;">Log In</a>
+                <button class="btn-primary">Start Trial</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO / LANDING ═══ -->
+    <!-- ═══ HERO / LANDING ═══ -->
+    <section id="landing-page" class="hero">
+        <!-- New 3D Canvas Background -->
+        <canvas id="constellation-canvas"></canvas>
+
+        <div class="hero-content">
+            <!-- Left: Text & Input -->
+            <div class="hero-text">
+                <h1>
+                    Where <strong>Truth</strong><br>
+                    Meets the <strong>Network</strong>.
+                </h1>
+                <p>
+                    The enterprise standard for digital content verification.
+                    Instantly detect manipulation in images using our
+                    decentralized forensic constellation.
+                </p>
+
+                <!-- Search Input -->
+                <div class="search-input-wrapper" id="upload-zone">
+                    <button class="search-trigger" id="input-trigger">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <span>Paste URL or drag image...</span>
+                    </button>
+                    <button class="btn-search-action" id="btn-analyze">Verify</button>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+            </div>
+
+            <!-- Right: Visual Area for Widgets (Canvas handles the globe) -->
+            <div class="hero-visual-area">
+                <!-- Widget 1: Result (Revolving) -->
+                <div class="glass-widget gw-revolving" id="gw-1" data-lat="10" data-lon="0">
+                    <span class="gw-label">Latest Verification</span>
+                    <div class="gw-value-lg">
+                        <svg class="gw-icon-check" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        AUTHENTIC
+                    </div>
+                </div>
+
+                <!-- Widget 2: Score (Revolving) -->
+                <div class="glass-widget gw-revolving" id="gw-2" data-lat="-20" data-lon="120">
+                    <span class="gw-label">Trust Score</span>
+                    <div class="gw-value-lg" style="justify-content: center; font-size: 2rem;">98.4</div>
+                    <div class="gw-gauge">
+                        <div class="gw-gauge-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Widget 3: Alert (Revolving) -->
+                <div class="glass-widget gw-revolving" id="gw-3" data-lat="30" data-lon="240">
+                    <span class="gw-label" style="color: var(--danger);">Active Threat</span>
+                    <div style="font-size: 0.9rem; color: #fff;">Deepfake Detected</div>
+                </div>
+
+                <!-- Widget 4: Node (Revolving) -->
+                <div class="glass-widget gw-revolving" id="gw-4" data-lat="45" data-lon="60">
+                    <span class="gw-label" style="color: var(--accent-cyan);">Network Node</span>
+                    <div style="font-size: 0.9rem; color: #fff;">US-East-1: <span
+                            style="color:var(--success)">Online</span></div>
+                </div>
+
+                <!-- Widget 5: Scan (Revolving) -->
+                <div class="glass-widget gw-revolving" id="gw-5" data-lat="-10" data-lon="180">
+                    <span class="gw-label">Global Scan</span>
+                    <div style="font-size: 0.9rem; color: #aaa;">Processing 45TB/s...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Strip -->
+        <div class="footer-strip">
+            <div class="footer-items">
+                <div class="f-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Real-time Constellation Scan</span>
+                </div>
+                <div class="f-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Enterprise-Grade Security</span>
+                </div>
+                <div class="f-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                        </path>
+                    </svg>
+                    <span>API Integrations</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ANALYZING STATE ═══ -->
+    <section id="analyzing-section" class="analyzing-overlay hidden">
+        <div style="text-align: center;">
+            <!-- Simple pulse loader -->
+            <div
+                style="width: 80px; height: 80px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 24px;">
+            </div>
+            <h2 id="analyzing-text" style="font-weight: 300;">Initiating Core Scan...</h2>
+            <div id="progress-container"
+                style="width: 300px; height: 2px; background: rgba(255,255,255,0.1); margin: 20px auto;">
+                <div id="progress-bar"
+                    style="width: 0%; height: 100%; background: var(--accent-cyan); transition: width 0.2s;"></div>
+            </div>
+        </div>
+        <style>
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </section>
+
+    <!-- ═══ RESULTS STATE ═══ -->
+    <section id="results-section" class="results-view hidden">
+        <div class="glass-widget"
+            style="margin-bottom: 40px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <h1 id="verdict-title">VERIFIED</h1>
+            <p id="verdict-message" style="color: var(--text-muted); margin-bottom: 24px;">Authenticity confirmed
+                via 12
+                nodes.</p>
+
+            <div style="font-size: 4rem; font-weight: 700; color: #fff; margin-bottom: 10px;" id="score-value">0
+            </div>
+            <div
+                style="color: var(--accent-cyan); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                Trust Score</div>
+
+            <button id="btn-recheck" class="btn-primary" style="margin-top: 32px; background: var(--accent-blue);">New
+                Analysis</button>
+        </div>
+
+        <div id="analyzer-cards"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <!-- Cards injected by JS -->
+        </div>
+
+        <div id="ela-viewer" class="glass-widget hidden" style="margin-top: 40px;">
+            <h3 style="margin-bottom: 16px;">ELA Heatmap</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <img id="ela-original" style="width: 100%; border-radius: 4px; opacity: 0.8;">
+                <img id="ela-result" style="width: 100%; border-radius: 4px;">
+            </div>
+        </div>
+    </section>
+
+    <script src="/jsAnd/main.js"></script>
+</body>
+
+</html>
